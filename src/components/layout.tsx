@@ -18,7 +18,7 @@ export default function Layout({
           <Image src="/logo.svg" alt="DFDS logo" width={56} height={18} />
         </div>
       </nav>
-      <main className={`${columns ? 'flex' : 'flex-col' } mx-auto w-full max-w-screen-xl items-center justify-center px-2`}>
+      <main className={`${columns ? 'flex' : '' } mx-auto w-full max-w-screen-xl items-center justify-center px-2`}>
         <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </NextThemesProvider>

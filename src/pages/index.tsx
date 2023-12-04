@@ -15,12 +15,10 @@ import type { ReturnType } from "./api/voyage/getAll";
 import { Button } from "~/components/ui/button";
 import { TABLE_DATE_FORMAT } from "~/constants";
 import CreateVoyageForm from "~/components/CreateVoyageForm";
+import { Toaster } from "~/components/ui/toaster";
 
 export default function Home() {
-  const { data: voyages } = useQuery<ReturnType>(["voyages"], () =>
-    fetchData("voyage/getAll")
-  );
-
+  const { data: voyages } = useQuery<ReturnType>(["voyages"], () => fetchData("voyage/getAll"));
   const queryClient = useQueryClient();
   const mutation = useMutation(
     async (voyageId: string) => {
@@ -93,6 +91,7 @@ export default function Home() {
           </TableBody>
         </Table>
       </Layout>
+      <Toaster/>
     </>
   );
 }

@@ -16,12 +16,16 @@ import {
   SelectValue
 } from "~/components/ui/select";
 
+interface Option {
+  id: string;
+  name: string;
+}
 interface Props {
   control: any;
   name: string;
   label: string;
   placeholder?: string;
-  options: string[];
+  options: Option[];
 }
 const SelectInput: FC<Props> = ({
   control,
@@ -44,8 +48,8 @@ const SelectInput: FC<Props> = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options.map((option) => (
-                <SelectItem value={option}>{option}</SelectItem>
+              {options.map((option, index) => (
+                <SelectItem key={index} value={option.id}>{option.name}</SelectItem>
               ))}
             </SelectContent>
           </Select>

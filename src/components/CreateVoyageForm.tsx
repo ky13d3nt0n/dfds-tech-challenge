@@ -3,8 +3,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "~/components/ui/button";
-import { FormSchema } from "../types/form";
-import { PORTS, VESSELS } from '../constants';
+import { fetchData } from "~/utils";
+import type { ReturnType } from "../pages/api/vessel/getAll";
+import { PORTS } from '../constants';
+import { useToast } from "~/components/ui/use-toast";
 import {
   Sheet,
   SheetContent,
@@ -48,8 +50,10 @@ interface Voyage {
 }
 
 const AddVoyageForm: FC<Props> = () => {
+  const [open, setOpen] = useState(false);
+  const { data: vessels } = useQuery<ReturnType>(["vessels"], () => fetchData("vessel/getAll"));
   const form = useForm<z.infer<typeof FormSchema>>({resolver: zodResolver(FormSchema)});
-
+  const { toast } = useToast()
   const queryClient = useQueryClient();
   const mutation = useMutation(
     async (values: Voyage) => {
@@ -65,16 +69,23 @@ const AddVoyageForm: FC<Props> = () => {
     },
     {
       onSuccess: async () => {
-        await queryClient.invalidateQueries(["voyages"]);
+        setOpen(false);
+        toast({
+          title: 'Success!',
+          description: 'Voyage created successfully.'
+        });
+        await queryClient.invalidateQueries(["vessels"]);
+        await queryClient.refetchQueries(["voyages"]);
+
       },
     }
   );
-
+  const handleCreate = (values: z.infer<typeof FormSchema>) => mutation.mutate(values);
   const [departureDT, setDepartureDT] = useState<Date>();
   const [arrivalDT, setArrivalDT] = useState<Date>();
 
   useEffect(() => {
-    // UI Library doesn't quite support date + time so we have to manually set our value
+    // UI Library doesn't quite support date + time so we have to manually set our values and validation.
     if(departureDT) form.setValue('departure', departureDT);
     if(arrivalDT) form.setValue('arrival', arrivalDT);
 
@@ -85,24 +96,14 @@ const AddVoyageForm: FC<Props> = () => {
     }
   }, [departureDT, arrivalDT]);
 
-  const handleSubmit = (values: z.infer<typeof FormSchema>) => {
-    // https://github.com/prisma/prisma-examples/tree/latest/javascript/rest-nextjs/src/app/create
-    // validate & sanitize
-    // departure data cannot be before arrival date
-    // send to database
-    // refresh list of voyages
-    mutation.mutate(values);
-    console.log('submit');
-  }
-
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button className="my-8" size="lg">Create</Button>
       </SheetTrigger>
       <SheetContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <form onSubmit={form.handleSubmit(handleCreate)}>
             <Datetime
               form={form}
               name="departure"
@@ -141,7 +142,7 @@ const AddVoyageForm: FC<Props> = () => {
               name="vessel"
               label="Vessel"
               placeholder="Select a vessel"
-              options={VESSELS}
+              options={vessels || []}
             />
 
             <Button type="submit" size="lg">Submit</Button>
