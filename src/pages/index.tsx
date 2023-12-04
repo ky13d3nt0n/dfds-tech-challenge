@@ -14,6 +14,7 @@ import { fetchData } from "~/utils";
 import type { ReturnType } from "./api/voyage/getAll";
 import { Button } from "~/components/ui/button";
 import { TABLE_DATE_FORMAT } from "~/constants";
+import CreateVoyageForm from "~/components/CreateVoyageForm";
 
 export default function Home() {
   const { data: voyages } = useQuery<ReturnType>(["voyages"], () =>
@@ -39,6 +40,9 @@ export default function Home() {
   );
 
   const handleDelete = (voyageId: string) => {
+    // TASK 4: check here if voyage has been deleted.
+    // Make async
+    // Show banner if voyage has NOT been deleted
     mutation.mutate(voyageId);
   };
 
@@ -48,7 +52,8 @@ export default function Home() {
         <title>Voyages | DFDS</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout columns={false}>
+        <CreateVoyageForm />
         <Table>
           <TableHeader>
             <TableRow>
