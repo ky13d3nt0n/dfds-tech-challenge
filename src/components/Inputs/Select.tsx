@@ -42,7 +42,7 @@ const SelectInput: FC<Props> = ({
       render={({field}) => (
         <FormItem className="mb-8">
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
+          <Select onValueChange={field.onChange} defaultValue={field.value as string}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

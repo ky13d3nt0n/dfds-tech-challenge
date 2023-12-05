@@ -112,7 +112,7 @@ const AddVoyageForm: FC = () => {
       </SheetTrigger>
       <SheetContent>
         <Form {...form}>
-          <form onSubmit={() => form.handleSubmit(handleCreate)}>
+          <form onSubmit={form.handleSubmit(handleCreate)}>
             <Datetime
               control={form.control}
               name="departure"
