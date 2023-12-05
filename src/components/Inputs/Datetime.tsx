@@ -17,10 +17,12 @@ import {
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '~/components/ui/calendar';
 import { format, toDate } from 'date-fns';
+import type { Control, FieldPath } from 'react-hook-form';
+import type { Voyage } from '~/components/CreateVoyageForm';
 
 interface Props {
-  form: any;
-  name: string;
+  control: Control<Voyage>;
+  name: FieldPath<Voyage>;
   label: string;
   placeholder?: string;
   defaultTime?: string;
@@ -28,7 +30,7 @@ interface Props {
 }
 
 const DatetimePicker: FC<Props> = ({
-  form,
+  control,
   name,
   label,
   placeholder = 'Pick a date',
@@ -41,7 +43,7 @@ const DatetimePicker: FC<Props> = ({
   useEffect(() => {
     if(!selected) return;
     setDatetime(toDate(selected));
-  }, [selected, timeValue]);
+  }, [selected, timeValue, setDatetime]);
 
   const handleTimeChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const time = e.target.value;
@@ -82,7 +84,7 @@ const DatetimePicker: FC<Props> = ({
 
   return (
     <FormField
-      control={form.control}
+      control={control}
       name={name}
       render={() => (
         <FormItem className="mb-8 flex flex-col">

@@ -22,7 +22,7 @@ import Datetime from '~/components/Inputs/Datetime';
 import Select from '~/components/Inputs/Select';
 import Checkbox from '~/components/Inputs/Checkbox';
 
-const FormSchema = z.object({
+export const FormSchema = z.object({
   departure: z.date({
     required_error: 'A departure date is required.',
   }),
@@ -41,17 +41,16 @@ const FormSchema = z.object({
   unitTypes: z.string().array().min(5, { message: 'Select a minimum of 5 unit types.'})
 });
 
-interface Props {}
-
-interface Voyage {
+export type Voyage = {
   departure: Date;
   arrival: Date;
   portOfLoading: string;
   portOfDischarge: string;
   vessel: string;
+  unitTypes: string[];
 }
 
-const AddVoyageForm: FC<Props> = () => {
+const AddVoyageForm: FC = () => {
   const [open, setOpen] = useState(false);
   const { data: vessels } = useQuery<ReturnType>(['vessels'], () => fetchData('vessel/getAll'));
   const { data: unitTypes } = useQuery<ReturnType>(['unitTypes'], () => fetchData('unitType/getAll'));
@@ -104,7 +103,7 @@ const AddVoyageForm: FC<Props> = () => {
     } else {
       form.clearErrors('arrival');
     }
-  }, [departureDT, arrivalDT]);
+  }, [departureDT, arrivalDT, form]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -113,9 +112,9 @@ const AddVoyageForm: FC<Props> = () => {
       </SheetTrigger>
       <SheetContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleCreate)}>
+          <form onSubmit={() => form.handleSubmit(handleCreate)}>
             <Datetime
-              form={form}
+              control={form.control}
               name="departure"
               label="Departure"
               setDatetime={setDepartureDT}
@@ -123,7 +122,7 @@ const AddVoyageForm: FC<Props> = () => {
             />
 
             <Datetime
-              form={form}
+              control={form.control}
               name="arrival"
               label="Arrival"
               setDatetime={setArrivalDT}
@@ -152,7 +151,7 @@ const AddVoyageForm: FC<Props> = () => {
               name="vessel"
               label="Vessel"
               placeholder="Select a vessel"
-              options={vessels || []}
+              options={vessels ?? []}
             />
 
             <Checkbox
@@ -160,7 +159,7 @@ const AddVoyageForm: FC<Props> = () => {
               name="unitTypes"
               label="Unit Types"
               placeholder="Select unit types"
-              items={unitTypes || []}
+              items={unitTypes ?? []}
             />
 
             <Button type="submit" size="lg">Submit</Button>

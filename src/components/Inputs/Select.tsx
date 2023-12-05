@@ -15,14 +15,15 @@ import {
   SelectTrigger,
   SelectValue
 } from '~/components/ui/select';
-
+import type { Control, FieldPath } from 'react-hook-form';
+import type { Voyage } from '~/components/CreateVoyageForm';
 interface Option {
   id: string;
   name: string;
 }
 interface Props {
-  control: any;
-  name: string;
+  control: Control<Voyage>;
+  name: FieldPath<Voyage>;
   label: string;
   placeholder?: string;
   options: Option[];
@@ -41,7 +42,7 @@ const SelectInput: FC<Props> = ({
       render={({field}) => (
         <FormItem className="mb-8">
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

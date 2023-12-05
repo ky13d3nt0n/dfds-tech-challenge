@@ -42,11 +42,11 @@ export default function Home() {
       onSuccess: async () => {
         await queryClient.invalidateQueries(['voyages']);
       },
-      onError: (err) => {
+      onError: (err: string) => {
         toast({
           variant: 'destructive',
           title: 'Uh-oh!',
-          description: `${err}`,
+          description: err,
           action: <ToastAction altText="Try again">Try again</ToastAction>
         });
       }
