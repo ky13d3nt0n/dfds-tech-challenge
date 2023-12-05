@@ -174,7 +174,7 @@ const AddVoyageForm: FC = () => {
               control={form.control}
               name="unitTypes"
               label="Unit Types"
-              placeholder="Select unit types"
+              placeholder="Select unit types (minimum of 5)"
               items={unitTypes ?? []}
             />
 

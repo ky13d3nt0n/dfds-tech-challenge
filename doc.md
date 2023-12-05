@@ -46,3 +46,5 @@
 - Make sure there are not duplicate records upon creation.
 - Allow for editing of current list of voyages in case a mistake was made.
 - Allow for generic typing - fix issues with current typings.
+- Confirmation/Close button on datepicker
+- Sorting table by table headers
