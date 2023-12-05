@@ -43,6 +43,7 @@ export default function Home() {
         await queryClient.invalidateQueries(['voyages']);
       },
       onError: (err: Error) => {
+        // Notify user that voyage deletion failed
         toast({
           variant: 'destructive',
           title: 'Uh-oh!',
