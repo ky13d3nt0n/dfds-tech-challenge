@@ -10,6 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
 import { fetchData } from "~/utils";
 import type { ReturnType } from "./api/voyage/getAll";
 import { Button } from "~/components/ui/button";
@@ -60,6 +65,7 @@ export default function Home() {
               <TableHead>Port of loading</TableHead>
               <TableHead>Port of discharge</TableHead>
               <TableHead>Vessel</TableHead>
+              <TableHead>Unit Types</TableHead>
               <TableHead>&nbsp;</TableHead>
             </TableRow>
           </TableHeader>
@@ -78,6 +84,32 @@ export default function Home() {
                 <TableCell>{voyage.portOfLoading}</TableCell>
                 <TableCell>{voyage.portOfDischarge}</TableCell>
                 <TableCell>{voyage.vessel.name}</TableCell>
+                <TableCell>
+                  {voyage.unitTypes.length > 0 ?
+                    <Popover>
+                      <PopoverTrigger>
+                        {voyage.unitTypes.length}
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80">
+                        <div className="grid gap-4">
+                          <div className="space-y-2">
+                            <h4 className="font-medium leading-none">Unit Types</h4>
+                            <p className="text-sm text-muted-foreground">
+                              Detailed list of unit types.
+                            </p>
+                          </div>
+                          <div className="grid gap-2">
+                            {voyage.unitTypes.map((unitType, index) => (
+                              <div key={index} className="flex justify-between gap-4">
+                                <span>{unitType.name}</span> <span>{unitType.defaultLength}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover> :
+                    '-' }
+                </TableCell>
                 <TableCell>
                   <Button
                     onClick={() => handleDelete(voyage.id)}

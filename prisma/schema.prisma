@@ -29,6 +29,7 @@ model Voyage {
     vessel             Vessel   @relation(fields: [vesselId], references: [id])
     createdAt          DateTime @default(now())
     updatedAt          DateTime @updatedAt
+    unitTypes          UnitType[]
 }
 
 model UnitType {
@@ -37,4 +38,5 @@ model UnitType {
   defaultLength      Float
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  voyages            Voyage[]
 }

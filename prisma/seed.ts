@@ -164,6 +164,23 @@ async function main() {
     },
   });
 
+  // Seeding units based on the predefined unitTypes array
+  for (let i = 0; i < 10; i++) {
+    const unitType = unitTypes[i % unitTypes.length]; // Loop back to start if i >= unitTypes.length
+
+    unitType &&
+      (await prisma.unitType.create({
+        data: {
+          name: unitType.name,
+          defaultLength: unitType.length, // Using 'length' as default length
+        },
+      }));
+  }
+
+  // Get all UnitType IDs
+  const unitTypesInDb = await prisma.unitType.findMany();
+  const unitTypeIds = unitTypesInDb.map(unitType => unitType.id);
+
   // Seeding voyages
   for (let i = 0; i < 10; i++) {
     const departingFromCopenhagenVessel =
@@ -178,6 +195,11 @@ async function main() {
       setHours(addDays(new Date(), i + 1), 9)
     );
 
+    // Shuffle unitTypeIds and select the first 5
+    const shuffled = unitTypeIds.sort(() => 0.5 - Math.random());
+    const randomNum = Math.floor(Math.random() * (unitTypeIds.length - 5 + 1)) + 5;
+    let selected = shuffled.slice(0, randomNum);
+
     await prisma.voyage.create({
       data: {
         portOfLoading: "Copenhagen",
@@ -185,6 +207,9 @@ async function main() {
         vesselId: departingFromCopenhagenVessel,
         scheduledDeparture,
         scheduledArrival,
+        unitTypes: {
+          connect: selected.map(id => ({ id })),
+        }
       },
     });
 
@@ -195,21 +220,11 @@ async function main() {
         vesselId: departingFromOsloVessel,
         scheduledDeparture,
         scheduledArrival,
+        unitTypes: {
+          connect: selected.map(id => ({ id })),
+        }
       },
     });
-  }
-
-  // Seeding units based on the predefined unitTypes array
-  for (let i = 0; i < 10; i++) {
-    const unitType = unitTypes[i % unitTypes.length]; // Loop back to start if i >= unitTypes.length
-
-    unitType &&
-      (await prisma.unitType.create({
-        data: {
-          name: unitType.name,
-          defaultLength: unitType.length, // Using 'length' as default length
-        },
-      }));
   }
 }
 
