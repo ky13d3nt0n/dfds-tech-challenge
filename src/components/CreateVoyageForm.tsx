@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form';
 import Datetime from "~/components/Inputs/Datetime";
 import Select from "~/components/Inputs/Select";
+import Checkbox from "~/components/Inputs/Checkbox";
 
 const FormSchema = z.object({
   departure: z.date({
@@ -37,6 +38,7 @@ const FormSchema = z.object({
   vessel: z.string({
     required_error: "A vessel is required.",
   }).nonempty(),
+  unitTypes: z.string().array().min(5, { message: "Select a minimum of 5 unit types."})
 });
 
 interface Props {}
@@ -52,7 +54,13 @@ interface Voyage {
 const AddVoyageForm: FC<Props> = () => {
   const [open, setOpen] = useState(false);
   const { data: vessels } = useQuery<ReturnType>(["vessels"], () => fetchData("vessel/getAll"));
-  const form = useForm<z.infer<typeof FormSchema>>({resolver: zodResolver(FormSchema)});
+  const { data: unitTypes } = useQuery<ReturnType>(["unitTypes"], () => fetchData("unitType/getAll"));
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      unitTypes: [],
+    }
+  });
   const { toast } = useToast()
   const queryClient = useQueryClient();
   const mutation = useMutation(
@@ -86,7 +94,10 @@ const AddVoyageForm: FC<Props> = () => {
 
   useEffect(() => {
     // UI Library doesn't quite support date + time so we have to manually set our values and validation.
-    if(departureDT) form.setValue('departure', departureDT);
+    if(departureDT) {
+      form.setValue('departure', departureDT);
+      form.clearErrors('departure');
+    }
     if(arrivalDT) form.setValue('arrival', arrivalDT);
 
     if(departureDT && arrivalDT && departureDT?.getTime() > arrivalDT?.getTime()) {
@@ -143,6 +154,14 @@ const AddVoyageForm: FC<Props> = () => {
               label="Vessel"
               placeholder="Select a vessel"
               options={vessels || []}
+            />
+
+            <Checkbox
+              control={form.control}
+              name="unitTypes"
+              label="Unit Types"
+              placeholder="Select unit types"
+              items={unitTypes || []}
             />
 
             <Button type="submit" size="lg">Submit</Button>
