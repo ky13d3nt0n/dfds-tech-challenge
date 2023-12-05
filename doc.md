@@ -8,10 +8,9 @@
 # Project Setup
 1. Install dependencies `npm install`
 2. Create `.env` file in root of the project - copying over contents from `env.example`
-3. Run `npx prisma db push` to generate `db.sqlite` file in `prisma/`
-4. Seed the database by running `npx prisma db seed`
-5. Run the project with `npm run dev`
-6. Visit `http://localhost:3000`
+3. Run `npm run db:reset` to generate `db.sqlite` file in `prisma/`, this will also seed the database
+4. Run the project with `npm run dev`
+5. Visit `http://localhost:3000`
 
 ## Task 1 - Create new voyage
 - [x] Adds ability to stack elements in layout.
