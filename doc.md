@@ -37,7 +37,7 @@
 ## Task 4 - Handling voyage deletion error
 [x] Adds Toaster notification when voyage deletion encounters an error.
 
-### If I could do things differently:
+## If I could do things differently:
 - Investigate further if Prisma can implement minimum of 5 constraints
 - Allow for hover state to show popover for Unit Type in table.
 - Make it more obvious that the popover is there for Unit Type in table.
