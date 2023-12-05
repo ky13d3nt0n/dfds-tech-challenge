@@ -99,6 +99,9 @@ export default function Home() {
                             </p>
                           </div>
                           <div className="grid gap-2">
+                              <div className="flex justify-between gap-4 border-b-2 py-2 mb-4">
+                                <span>Name</span> <span>Default Length</span>
+                              </div>
                             {voyage.unitTypes.map((unitType, index) => (
                               <div key={index} className="flex justify-between gap-4">
                                 <span>{unitType.name}</span> <span>{unitType.defaultLength}</span>
