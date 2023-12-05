@@ -16,7 +16,6 @@ interface Item {
   id: string;
   name: string;
 }
-
 interface Props {
   control: Control<Voyage>;
   name: FieldPath<Voyage>;

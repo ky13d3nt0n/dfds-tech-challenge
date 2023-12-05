@@ -51,6 +51,7 @@ const DatetimePicker: FC<Props> = ({
       setTimeValue(time);
       return;
     }
+
     const [hours, minutes] = time.split(':').map((str) => parseInt(str, 10));
     if(Number.isNaN(hours) || Number.isNaN(minutes) ) return;
     const newSelectedDate = new Date(
@@ -60,6 +61,7 @@ const DatetimePicker: FC<Props> = ({
       hours,
       minutes
     );
+
     setSelected(newSelectedDate);
     setTimeValue(time);
   };
@@ -69,9 +71,11 @@ const DatetimePicker: FC<Props> = ({
       setSelected(date);
       return;
     }
+
     const [hours, minutes] = timeValue
       .split(':')
       .map((str) => parseInt(str, 10));
+
     const newDate = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -79,6 +83,7 @@ const DatetimePicker: FC<Props> = ({
       hours,
       minutes
     );
+
     setSelected(newDate);
   };
 

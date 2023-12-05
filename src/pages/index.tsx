@@ -52,7 +52,6 @@ export default function Home() {
       }
     }
   );
-
   const handleDelete = (voyageId: string) => mutation.mutate(voyageId);
 
   return (

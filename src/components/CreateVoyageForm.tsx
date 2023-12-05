@@ -51,17 +51,21 @@ export type Voyage = {
 }
 
 const AddVoyageForm: FC = () => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [departureDT, setDepartureDT] = useState<Date>();
+  const [arrivalDT, setArrivalDT] = useState<Date>();
   const { data: vessels } = useQuery<ReturnType>(['vessels'], () => fetchData('vessel/getAll'));
   const { data: unitTypes } = useQuery<ReturnType>(['unitTypes'], () => fetchData('unitType/getAll'));
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       unitTypes: [],
     }
   });
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
+
   const mutation = useMutation(
     async (values: Voyage) => {
       const response = await fetch('/api/voyage/create', {
@@ -88,8 +92,6 @@ const AddVoyageForm: FC = () => {
     }
   );
   const handleCreate = (values: z.infer<typeof FormSchema>) => mutation.mutate(values);
-  const [departureDT, setDepartureDT] = useState<Date>();
-  const [arrivalDT, setArrivalDT] = useState<Date>();
 
   useEffect(() => {
     // UI Library doesn't quite support date + time field so we have to manually set our values and validation.
