@@ -53,7 +53,6 @@ export type Voyage = {
 const AddVoyageForm: FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const [departureDT, setDepartureDT] = useState<Date>();
   const [arrivalDT, setArrivalDT] = useState<Date>();
   const { data: vessels } = useQuery<ReturnType>(['vessels'], () => fetchData('vessel/getAll'));
@@ -80,7 +79,6 @@ const AddVoyageForm: FC = () => {
     },
     {
       onSuccess: async () => {
-        setOpen(false);
         toast({
           title: 'Success!',
           description: 'Voyage created successfully.'
@@ -110,7 +108,7 @@ const AddVoyageForm: FC = () => {
   }, [departureDT, arrivalDT, form]);
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet>
       <SheetTrigger asChild>
         <Button className="my-8" size="lg">Create</Button>
       </SheetTrigger>
