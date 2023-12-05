@@ -3,10 +3,10 @@ import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
-} from "@tanstack/react-query";
-import { type AppType } from "next/dist/shared/lib/utils";
-import React, { useState } from "react";
-import "~/styles/globals.css";
+} from '@tanstack/react-query';
+import { type AppType } from 'next/dist/shared/lib/utils';
+import React, { useState } from 'react';
+import '~/styles/globals.css';
 
 const MyApp: AppType<{ dehydratedState: DehydratedState }> = ({
   Component,

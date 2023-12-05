@@ -1,22 +1,22 @@
-"use client"
+'use client'
 
-import React, { FC, useState, useEffect } from 'react';
-import { Button } from "~/components/ui/button";
+import React, { type FC, useState, useEffect } from 'react';
+import { Button } from '~/components/ui/button';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage
-} from "~/components/ui/form";
+} from '~/components/ui/form';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from "~/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "~/components/ui/calendar";
-import { format, toDate } from "date-fns";
+} from '~/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '~/components/ui/calendar';
+import { format, toDate } from 'date-fns';
 
 interface Props {
   form: any;
@@ -92,7 +92,7 @@ const DatetimePicker: FC<Props> = ({
               <FormControl>
                 <Button variant="outline">
                   {selected ? (
-                    format(new Date(selected), "dd/MM/yyyy HH:mm")
+                    format(new Date(selected), 'dd/MM/yyyy HH:mm')
                   ) : (
                     <span>{placeholder}</span>
                   )}
@@ -105,7 +105,7 @@ const DatetimePicker: FC<Props> = ({
                 mode="single"
                 selected={selected}
                 onSelect={handleDaySelect}
-                disabled={(date) => date <= new Date() || date < new Date("1900-01-01")}
+                disabled={(date) => date <= new Date() || date < new Date('1900-01-01')}
                 footer={
                   <p>
                     Pick a time:{' '}

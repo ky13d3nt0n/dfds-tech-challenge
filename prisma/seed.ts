@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { addDays, setHours, startOfHour } from "date-fns";
+import { PrismaClient } from '@prisma/client';
+import { addDays, setHours, startOfHour } from 'date-fns';
 
 const prisma = new PrismaClient();
 
@@ -15,138 +15,138 @@ interface UnitType {
 
 const unitTypes: UnitType[] = [
   {
-    id: "20FL",
+    id: '20FL',
     allowDrivers: false,
-    name: "Flat 20",
-    unitGroupId: "FLA",
+    name: 'Flat 20',
+    unitGroupId: 'FLA',
     length: 6.1,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "40FL",
+    id: '40FL',
     allowDrivers: false,
-    name: "Flat 40",
-    unitGroupId: "FLA",
+    name: 'Flat 40',
+    unitGroupId: 'FLA',
     length: 12.2,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "45FL",
+    id: '45FL',
     allowDrivers: false,
-    name: "Flat 45",
-    unitGroupId: "FLA",
+    name: 'Flat 45',
+    unitGroupId: 'FLA',
     length: 13.72,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "CON20",
+    id: 'CON20',
     allowDrivers: false,
-    name: "Container 20",
-    unitGroupId: "CON",
+    name: 'Container 20',
+    unitGroupId: 'CON',
     length: 6.1,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "CON30",
+    id: 'CON30',
     allowDrivers: false,
-    name: "Container 30",
-    unitGroupId: "CON",
+    name: 'Container 30',
+    unitGroupId: 'CON',
     length: 9.15,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "CON40",
+    id: 'CON40',
     allowDrivers: false,
-    name: "Container 40",
-    unitGroupId: "CON",
+    name: 'Container 40',
+    unitGroupId: 'CON',
     length: 12.2,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "CON45",
+    id: 'CON45',
     allowDrivers: false,
-    name: "Container 45",
-    unitGroupId: "CON",
+    name: 'Container 45',
+    unitGroupId: 'CON',
     length: 13.72,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC20",
+    id: 'TC20',
     allowDrivers: false,
-    name: "Tankcontainer 20",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 20',
+    unitGroupId: 'CON',
     length: 6.1,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC23",
+    id: 'TC23',
     allowDrivers: false,
-    name: "Tankcontainer 23",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 23',
+    unitGroupId: 'CON',
     length: 7.15,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC24",
+    id: 'TC24',
     allowDrivers: false,
-    name: "Tankcontainer 24",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 24',
+    unitGroupId: 'CON',
     length: 7.45,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC25",
+    id: 'TC25',
     allowDrivers: false,
-    name: "Tankcontainer 25",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 25',
+    unitGroupId: 'CON',
     length: 7.62,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC26",
+    id: 'TC26',
     allowDrivers: false,
-    name: "Tankcontainer 26",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 26',
+    unitGroupId: 'CON',
     length: 7.82,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC30",
+    id: 'TC30',
     allowDrivers: false,
-    name: "Tankcontainer 30",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 30',
+    unitGroupId: 'CON',
     length: 9.15,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC33",
+    id: 'TC33',
     allowDrivers: false,
-    name: "Tankcontainer 33",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 33',
+    unitGroupId: 'CON',
     length: 10,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
   {
-    id: "TC40",
+    id: 'TC40',
     allowDrivers: false,
-    name: "Tankcontainer 40",
-    unitGroupId: "CON",
+    name: 'Tankcontainer 40',
+    unitGroupId: 'CON',
     length: 12.2,
-    mandatoryField: "UnitNumber",
+    mandatoryField: 'UnitNumber',
     unitNumberAvailable: true,
   },
 ];
@@ -154,13 +154,13 @@ const unitTypes: UnitType[] = [
 async function main() {
   const crownSeaways = await prisma.vessel.create({
     data: {
-      name: "Crown Seaways",
+      name: 'Crown Seaways',
     },
   });
 
   const pearlSeaways = await prisma.vessel.create({
     data: {
-      name: "Pearl Seaways",
+      name: 'Pearl Seaways',
     },
   });
 
@@ -198,12 +198,12 @@ async function main() {
     // Shuffle unitTypeIds and select the first 5
     const shuffled = unitTypeIds.sort(() => 0.5 - Math.random());
     const randomNum = Math.floor(Math.random() * (unitTypeIds.length - 5 + 1)) + 5;
-    let selected = shuffled.slice(0, randomNum);
+    const selected = shuffled.slice(0, randomNum);
 
     await prisma.voyage.create({
       data: {
-        portOfLoading: "Copenhagen",
-        portOfDischarge: "Oslo",
+        portOfLoading: 'Copenhagen',
+        portOfDischarge: 'Oslo',
         vesselId: departingFromCopenhagenVessel,
         scheduledDeparture,
         scheduledArrival,
@@ -215,8 +215,8 @@ async function main() {
 
     await prisma.voyage.create({
       data: {
-        portOfLoading: "Oslo",
-        portOfDischarge: "Copenhagen",
+        portOfLoading: 'Oslo',
+        portOfDischarge: 'Copenhagen',
         vesselId: departingFromOsloVessel,
         scheduledDeparture,
         scheduledArrival,

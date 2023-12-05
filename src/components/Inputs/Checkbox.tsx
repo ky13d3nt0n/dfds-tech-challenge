@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import {
   FormControl,
   FormField,
@@ -8,8 +8,8 @@ import {
   FormLabel,
   FormDescription,
   FormMessage
-} from "~/components/ui/form";
-import { Checkbox } from "~/components/ui/checkbox";
+} from '~/components/ui/form';
+import { Checkbox } from '~/components/ui/checkbox';
 
 interface Item {
   id: string;

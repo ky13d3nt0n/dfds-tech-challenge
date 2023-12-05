@@ -1,20 +1,20 @@
-"use client"
+'use client'
 
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage
-} from "~/components/ui/form";
+} from '~/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "~/components/ui/select";
+} from '~/components/ui/select';
 
 interface Option {
   id: string;

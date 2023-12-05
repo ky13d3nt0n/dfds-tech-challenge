@@ -1,11 +1,11 @@
-import type { NextApiHandler, NextApiResponse, NextApiRequest } from "next";
-import { prisma } from "~/server/db";
+import type { NextApiHandler, NextApiResponse, NextApiRequest } from 'next';
+import { prisma } from '~/server/db';
 
 const handler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<undefined>
 ) => {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     const {
       departure,
       arrival,

@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { format } from "date-fns";
-import Head from "next/head";
-import Layout from "~/components/layout";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import Head from 'next/head';
+import Layout from '~/components/layout';
 import {
   Table,
   TableBody,
@@ -9,38 +9,38 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from '~/components/ui/table';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import { fetchData } from "~/utils";
-import type { ReturnType } from "./api/voyage/getAll";
-import { Button } from "~/components/ui/button";
-import { TABLE_DATE_FORMAT } from "~/constants";
-import CreateVoyageForm from "~/components/CreateVoyageForm";
-import { Toaster } from "~/components/ui/toaster";
-import { ToastAction } from "~/components/ui/toast"
-import { useToast } from "~/components/ui/use-toast";
+} from '~/components/ui/popover';
+import { fetchData } from '~/utils';
+import type { ReturnType } from './api/voyage/getAll';
+import { Button } from '~/components/ui/button';
+import { TABLE_DATE_FORMAT } from '~/constants';
+import CreateVoyageForm from '~/components/CreateVoyageForm';
+import { Toaster } from '~/components/ui/toaster';
+import { ToastAction } from '~/components/ui/toast'
+import { useToast } from '~/components/ui/use-toast';
 
 export default function Home() {
   const { toast } = useToast();
-  const { data: voyages } = useQuery<ReturnType>(["voyages"], () => fetchData("voyage/getAll"));
+  const { data: voyages } = useQuery<ReturnType>(['voyages'], () => fetchData('voyage/getAll'));
   const queryClient = useQueryClient();
   const mutation = useMutation(
     async (voyageId: string) => {
       const response = await fetch(`/api/voyage/delete?id=${voyageId}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete the voyage");
+        throw new Error('Failed to delete the voyage');
       }
     },
     {
       onSuccess: async () => {
-        await queryClient.invalidateQueries(["voyages"]);
+        await queryClient.invalidateQueries(['voyages']);
       },
       onError: (err) => {
         toast({

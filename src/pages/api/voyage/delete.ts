@@ -1,6 +1,6 @@
-import type { Vessel, Voyage } from "@prisma/client";
-import type { NextApiHandler, NextApiResponse, NextApiRequest } from "next";
-import { prisma } from "~/server/db";
+import type { Vessel, Voyage } from '@prisma/client';
+import type { NextApiHandler, NextApiResponse, NextApiRequest } from 'next';
+import { prisma } from '~/server/db';
 
 export type ReturnType = (Voyage & { vessel: Vessel })[];
 
@@ -8,7 +8,7 @@ const handler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<undefined>
 ) => {
-  if (req.method === "DELETE") {
+  if (req.method === 'DELETE') {
     // randomly fail the delete request
     const maybe = Math.round(Math.random());
     if (maybe) {
