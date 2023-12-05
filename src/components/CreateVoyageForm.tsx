@@ -1,44 +1,44 @@
-"use client"
+'use client'
 
-import React, { FC, useState, useEffect } from 'react';
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button } from "~/components/ui/button";
-import { fetchData } from "~/utils";
-import type { ReturnType } from "../pages/api/vessel/getAll";
+import React, { type FC, useState, useEffect } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button } from '~/components/ui/button';
+import { fetchData } from '~/utils';
+import type { ReturnType } from '../pages/api/vessel/getAll';
 import { PORTS } from '../constants';
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from '~/components/ui/use-toast';
 import {
   Sheet,
   SheetContent,
   SheetTrigger
-} from "~/components/ui/sheet";
+} from '~/components/ui/sheet';
 import {
   Form
-} from "~/components/ui/form";
+} from '~/components/ui/form';
 import { z } from 'zod';
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import Datetime from "~/components/Inputs/Datetime";
-import Select from "~/components/Inputs/Select";
-import Checkbox from "~/components/Inputs/Checkbox";
+import Datetime from '~/components/Inputs/Datetime';
+import Select from '~/components/Inputs/Select';
+import Checkbox from '~/components/Inputs/Checkbox';
 
 const FormSchema = z.object({
   departure: z.date({
-    required_error: "A departure date is required.",
+    required_error: 'A departure date is required.',
   }),
   arrival: z.date({
-    required_error: "An arrival date is required.",
+    required_error: 'An arrival date is required.',
   }),
   portOfLoading: z.string({
-    required_error: "A port of loading is required.",
+    required_error: 'A port of loading is required.',
   }).nonempty(),
   portOfDischarge: z.string({
-    required_error: "A port of discharge is required.",
+    required_error: 'A port of discharge is required.',
   }).nonempty(),
   vessel: z.string({
-    required_error: "A vessel is required.",
+    required_error: 'A vessel is required.',
   }).nonempty(),
-  unitTypes: z.string().array().min(5, { message: "Select a minimum of 5 unit types."})
+  unitTypes: z.string().array().min(5, { message: 'Select a minimum of 5 unit types.'})
 });
 
 interface Props {}
@@ -53,26 +53,26 @@ interface Voyage {
 
 const AddVoyageForm: FC<Props> = () => {
   const [open, setOpen] = useState(false);
-  const { data: vessels } = useQuery<ReturnType>(["vessels"], () => fetchData("vessel/getAll"));
-  const { data: unitTypes } = useQuery<ReturnType>(["unitTypes"], () => fetchData("unitType/getAll"));
+  const { data: vessels } = useQuery<ReturnType>(['vessels'], () => fetchData('vessel/getAll'));
+  const { data: unitTypes } = useQuery<ReturnType>(['unitTypes'], () => fetchData('unitType/getAll'));
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       unitTypes: [],
     }
   });
-  const { toast } = useToast()
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const mutation = useMutation(
     async (values: Voyage) => {
       const response = await fetch('/api/voyage/create', {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(values),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add the voyage");
+        throw new Error('Failed to add the voyage');
       }
     },
     {
@@ -82,9 +82,8 @@ const AddVoyageForm: FC<Props> = () => {
           title: 'Success!',
           description: 'Voyage created successfully.'
         });
-        await queryClient.invalidateQueries(["vessels"]);
-        await queryClient.refetchQueries(["voyages"]);
-
+        await queryClient.invalidateQueries(['vessels']);
+        await queryClient.refetchQueries(['voyages']);
       },
     }
   );
@@ -101,7 +100,7 @@ const AddVoyageForm: FC<Props> = () => {
     if(arrivalDT) form.setValue('arrival', arrivalDT);
 
     if(departureDT && arrivalDT && departureDT?.getTime() > arrivalDT?.getTime()) {
-      form.setError('arrival', { message: "Arrival date cannot be before departure date." });
+      form.setError('arrival', { message: 'Arrival date cannot be before departure date.' });
     } else {
       form.clearErrors('arrival');
     }

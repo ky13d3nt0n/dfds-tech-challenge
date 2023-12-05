@@ -21,8 +21,11 @@ import { Button } from "~/components/ui/button";
 import { TABLE_DATE_FORMAT } from "~/constants";
 import CreateVoyageForm from "~/components/CreateVoyageForm";
 import { Toaster } from "~/components/ui/toaster";
+import { ToastAction } from "~/components/ui/toast"
+import { useToast } from "~/components/ui/use-toast";
 
 export default function Home() {
+  const { toast } = useToast();
   const { data: voyages } = useQuery<ReturnType>(["voyages"], () => fetchData("voyage/getAll"));
   const queryClient = useQueryClient();
   const mutation = useMutation(
@@ -39,15 +42,18 @@ export default function Home() {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["voyages"]);
       },
+      onError: (err) => {
+        toast({
+          variant: 'destructive',
+          title: 'Uh-oh!',
+          description: `${err}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>
+        });
+      }
     }
   );
 
-  const handleDelete = (voyageId: string) => {
-    // TASK 4: check here if voyage has been deleted.
-    // Make async
-    // Show banner if voyage has NOT been deleted
-    mutation.mutate(voyageId);
-  };
+  const handleDelete = (voyageId: string) => mutation.mutate(voyageId);
 
   return (
     <>
