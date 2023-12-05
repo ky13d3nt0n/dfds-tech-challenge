@@ -80,13 +80,23 @@ const AddVoyageForm: FC = () => {
     },
     {
       onSuccess: async () => {
+        // Close our sheet
         setOpen(false);
+
+        // Show toast notification
         toast({
           title: 'Success!',
           description: 'Voyage created successfully.'
         });
-        form.reset(); // Clear out old values.
+
+        // Clear out old form values just in case.
+        form.reset();
+
+        // Invalidate queries so we can refetch them.
         await queryClient.invalidateQueries(['vessels']);
+        await queryClient.invalidateQueries(['unitTypes']);
+
+        // Refetch voyages so it shows in our voyages table.
         await queryClient.refetchQueries(['voyages']);
       },
     }
@@ -102,6 +112,7 @@ const AddVoyageForm: FC = () => {
     }
     if(arrivalDT) form.setValue('arrival', arrivalDT);
 
+    // Validate that arrival date is not before departure date.
     if(departureDT && arrivalDT && departureDT?.getTime() > arrivalDT?.getTime()) {
       form.setError('arrival', { message: 'Arrival date cannot be before departure date.' });
     } else {
