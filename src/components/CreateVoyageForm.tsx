@@ -81,6 +81,7 @@ const AddVoyageForm: FC = () => {
           title: 'Success!',
           description: 'Voyage created successfully.'
         });
+        form.reset(); // Clear out old values.
         await queryClient.invalidateQueries(['vessels']);
         await queryClient.refetchQueries(['voyages']);
       },
@@ -91,7 +92,8 @@ const AddVoyageForm: FC = () => {
   const [arrivalDT, setArrivalDT] = useState<Date>();
 
   useEffect(() => {
-    // UI Library doesn't quite support date + time so we have to manually set our values and validation.
+    // UI Library doesn't quite support date + time field so we have to manually set our values and validation.
+    // Followed react-day-picker implementation: https://react-day-picker.js.org/guides/input-fields#example-time-selection
     if(departureDT) {
       form.setValue('departure', departureDT);
       form.clearErrors('departure');
@@ -112,6 +114,7 @@ const AddVoyageForm: FC = () => {
       </SheetTrigger>
       <SheetContent>
         <Form {...form}>
+          { /* followed docs here: https://react-hook-form.com/docs/useform/handlesubmit, but still getting a type error. */ }
           <form onSubmit={form.handleSubmit(handleCreate)}>
             <Datetime
               control={form.control}
