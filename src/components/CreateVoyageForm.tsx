@@ -125,7 +125,7 @@ const AddVoyageForm: FC = () => {
       <SheetTrigger asChild>
         <Button className="my-8" size="lg">Create</Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-scroll">
         <Form {...form}>
           <form onSubmit={(event) => {
             event.preventDefault();

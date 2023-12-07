@@ -47,4 +47,6 @@
 - Allow for editing of current list of voyages in case a mistake was made.
 - Allow for generic typing - fix issues with current typings.
 - Confirmation/Close button on datepicker
-- Sorting table by table headers
+- Sorting table by table headers.
+- Use Async for Select Inputs that are pulled in from db.
+- Clean up mobile styling.
