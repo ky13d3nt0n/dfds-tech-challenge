@@ -127,11 +127,8 @@ const AddVoyageForm: FC = () => {
       </SheetTrigger>
       <SheetContent className="overflow-scroll">
         <Form {...form}>
-          <form onSubmit={(event) => {
-            event.preventDefault();
-            void form.handleSubmit(handleCreate);
-            }
-          }>
+          { /* followed docs here: https://react-hook-form.com/docs/useform/handlesubmit, but still getting a type error. :( */ }
+          <form onSubmit={form.handleSubmit(handleCreate)}> { /* eslint-disable-line @typescript-eslint/no-misused-promises */ }
             <Datetime
               control={form.control}
               name="departure"
