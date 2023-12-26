@@ -50,3 +50,4 @@
 - Sorting table by table headers.
 - Use Async for Select Inputs that are pulled in from db.
 - Clean up mobile styling.
+- Add CI/CD workflows for linting and PR template
